@@ -15,6 +15,9 @@ school: str = "Holberton"
 
 
 def main() -> None:
+    """Define and annotate the following
+    variables with the specified values
+    """
     pass
 
 
