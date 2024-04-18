@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""function that takes a list and returns a tuple with
+"""Use mypy to validate the following piece of
+code and apply any necessary changes.
 """
 
 
