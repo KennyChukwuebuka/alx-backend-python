@@ -9,10 +9,11 @@ and eventually returns it.
 
 Use the random module.
 """
-import random
 import asyncio
+import random
 
 
-async def wait_random(max_delay: int = 10) -> float:
-    """Returns the float"""
-    return random.uniform(0, max_delay)
+async def wait_random(max_delay=10):
+    delay = random.uniform(0, max_delay)
+    await asyncio.sleep(delay)
+    return delay
