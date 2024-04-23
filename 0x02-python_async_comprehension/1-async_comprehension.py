@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Async function 
+"""Async function
 """
 
 from typing import List
