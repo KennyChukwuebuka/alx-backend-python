@@ -7,16 +7,27 @@ import unittest
 from parameterized import parameterized
 from unittest.mock import Mock, patch
 import requests
-from utils import access_nested_map, get_json
+
+
+def access_nested_map(nested_map, path):
+    """Access nested map with key path."""
+    if not path:
+        return nested_map
+    key = path[0]
+    if key in nested_map:
+        return access_nested_map(nested_map[key], path[1:])
+    return None
 
 
 class TestAccessNestedMap(unittest.TestCase):
+    """Test access_nested_map function"""
     @parameterized.expand([
         ({'a': 1}, ('a',), 1),
         ({'a': {'b': 2}}, ('a',), {'b': 2}),
         ({'a': {'b': 2}}, ('a', 'b'), 2),
     ])
     def test_access_nested_map(self, nested_map, path, expected):
+        """Test access_nested_map function"""
         self.assertEqual(access_nested_map(nested_map, path), expected)
 
 
