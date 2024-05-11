@@ -5,6 +5,8 @@ Test utils.py
 
 import unittest
 from parameterized import parameterized
+from unittest.mock import Mock, patch
+import requests
 
 
 def access_nested_map(data, keys, default=None):
@@ -53,6 +55,44 @@ class TestAccessNestedMap(unittest.TestCase):
         with self.assertRaises(KeyError) as context:
             access_nested_map(nested_map, path)
         self.assertEqual(context.exception.args[0], expected_error_message)
+
+
+def get_json(url):
+    """
+    Get JSON data from a URL.
+
+    Args:
+    - url (str): The URL to fetch JSON data from.
+
+    Returns:
+    - dict: The JSON data.
+    """
+    response = requests.get(url)
+    return response.json()
+
+
+class TestGetJson(unittest.TestCase):
+    """Test get_json"""
+    @parameterized.expand([
+        ("http://example.com", {"payload": True}),
+        ("http://holberton.io", {"payload": False}),
+    ])
+    @patch('requests.get')
+    def test_get_json(self, test_url, test_payload, mock_get):
+        """Test get_json"""
+        # Mocking the json method of the response object
+        mock_response = Mock()
+        mock_response.json.return_value = test_payload
+        mock_get.return_value = mock_response
+
+        # Calling the function under test
+        result = get_json(test_url)
+
+        # Asserting that requests.get was called exactly once with test_url
+        mock_get.assert_called_once_with(test_url)
+
+        # Asserting that the output of get_json is equal to test_payload
+        self.assertEqual(result, test_payload)
 
 
 if __name__ == '__main__':
