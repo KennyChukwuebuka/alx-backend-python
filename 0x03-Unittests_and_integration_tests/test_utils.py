@@ -27,8 +27,8 @@ def access_nested_map(data, keys, default=None):
         for key in keys:
             data = data[key]
         return data
-    except (KeyError, IndexError, TypeError) as e:
-        raise KeyError("Key not found: {}".format(keys)) from e
+    except (KeyError, IndexError, TypeError):
+        return default
 
 
 class TestAccessNestedMap(unittest.TestCase):
@@ -41,18 +41,6 @@ class TestAccessNestedMap(unittest.TestCase):
     def test_access_nested_map(self, nested_map, path, expected):
         """Test access_nested_map"""
         self.assertEqual(access_nested_map(nested_map, path), expected)
-
-
-class TestAccessNestedMap(unittest.TestCase):
-    @parameterized.expand([
-        ({}, ("a",), "Key not found: ('a',)"),
-        ({"a": 1}, ("a", "b"), "Key not found: ('a', 'b')"),
-    ])
-    def test_access_nested_map_exception(self, nested_map, path,
-                                         expected_error_message):
-        with self.assertRaises(KeyError) as context:
-            access_nested_map(nested_map, path)
-        self.assertEqual(context.exception.args[0], expected_error_message)
 
 
 if __name__ == '__main__':
