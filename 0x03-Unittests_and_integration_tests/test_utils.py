@@ -28,7 +28,7 @@ def access_nested_map(data, keys, default=None):
             data = data[key]
         return data
     except (KeyError, IndexError, TypeError) as e:
-        raise KeyError(f"Key not found: {keys}") from e
+        raise KeyError("Key not found: {}".format(keys)) from e
 
 
 class TestAccessNestedMap(unittest.TestCase):
