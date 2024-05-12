@@ -9,6 +9,7 @@ from parameterized import parameterized
 from client import GithubOrgClient
 
 class TestGithubOrgClient(unittest.TestCase):
+    """Test GithubOrgClient"""
 
     @parameterized.expand([
         ("google",),
@@ -16,6 +17,7 @@ class TestGithubOrgClient(unittest.TestCase):
     ])
     @patch('your_module.GithubOrgClient.get_json', return_value={})
     def test_org(self, org_name, mocked_get_json):
+        """Test org"""
         # Instantiate GithubOrgClient with the organization name
         github_org_client = GithubOrgClient(org_name)
         
